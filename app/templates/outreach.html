@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Outreach{% endblock %}
+{% block page_title %}Outreach{% endblock %}
+{% block content %}
+<p class="eyebrow">Automated sequences</p>
+<h1 class="display">Outreach</h1>
+<p class="lede">A three stage sequence with a five day gap between stages.
+  Everything here is simulated: advancing a stage records what would have been
+  sent and when. No message leaves this machine.</p>
+
+<section class="card">
+  <h2 class="sec" style="margin-top:0">The sequence</h2>
+  {% for n, name, what in sequence %}
+  <div class="row">
+    <span class="avatar">{{ n }}</span>
+    <div><div class="who">{{ name }}</div><div class="muted" style="font-size:12.5px">{{ what }}</div></div>
+    {% if n > 1 %}<span class="when">+5 days</span>{% endif %}
+  </div>
+  {% endfor %}
+</section>
+
+<h2 class="sec">Running <span class="chip warn">{{ running|length }}</span></h2>
+<p class="sec-sub">Mid-sequence, waiting on the next stage.</p>
+<section class="card flush">
+  <table>
+    <thead><tr><th>Creator</th><th>Stage</th><th>Sent so far</th><th>Next due</th><th></th></tr></thead>
+    <tbody>
+      {% for c in running %}
+      <tr id="r-{{ c.id }}">
+        <td><a href="{{ url_for('creator_detail', cid=c.id) }}">{{ c.name }}</a>
+          <div class="muted" style="font-size:11.5px">{{ c.handle }}</div></td>
+        <td><span class="chip warn" id="st-{{ c.id }}">{{ c.sequence.stage }} of 3</span></td>
+        <td class="muted">{% for s in c.sequence.sent %}{{ s.subject }}{{ ', ' if not loop.last }}{% endfor %}</td>
+        <td class="muted" id="nd-{{ c.id }}">{{ c.sequence.next_due or '—' }}</td>
+        <td><button class="btn small go" onclick="advance('{{ c.id }}', this)">Advance</button></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="empty">Nothing running.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<h2 class="sec">Stopped because they replied <span class="chip decide">{{ replied|length }}</span></h2>
+<p class="sec-sub">The sequence stops the moment someone answers. Chasing a
+  person who already replied is the one failure this guards against, so it is a
+  rule rather than a reminder — try Advance on one and it refuses.</p>
+<section class="card flush">
+  <table>
+    <thead><tr><th>Creator</th><th>Reached</th><th>Why it stopped</th><th></th></tr></thead>
+    <tbody>
+      {% for c in replied %}
+      <tr>
+        <td><a href="{{ url_for('creator_detail', cid=c.id) }}">{{ c.name }}</a></td>
+        <td><span class="chip">stage {{ c.sequence.stage }}</span></td>
+        <td class="muted">{{ c.sequence.stop_reason }}</td>
+        <td><button class="btn small" onclick="advance('{{ c.id }}', this)">Try to advance</button></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="empty">Nobody has replied yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+{% if not_started %}
+<h2 class="sec">Not started <span class="chip">{{ not_started|length }}</span></h2>
+<section class="card flush">
+  <table>
+    <thead><tr><th>Creator</th><th>Trade</th><th>Stage</th><th></th></tr></thead>
+    <tbody>
+      {% for c in not_started %}
+      <tr>
+        <td><a href="{{ url_for('creator_detail', cid=c.id) }}">{{ c.name }}</a></td>
+        <td>{{ c.trade }}</td>
+        <td><span class="chip cool">{{ c.stage }}</span></td>
+        <td><button class="btn small go" onclick="advance('{{ c.id }}', this)">Start sequence</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function advance(id, btn) {
+  btn.disabled = true;
+  const d = await post('/outreach/' + id + '/advance');
+  btn.disabled = false;
+  if (!d.ok) { toast(d.error, true); return; }
+  if (d.finished) { toast('All three stages already sent'); return; }
+  toast('Simulated stage ' + d.stage + ' — nothing was sent');
+  setTimeout(() => location.reload(), 900);
+}
+</script>
+{% endblock %}

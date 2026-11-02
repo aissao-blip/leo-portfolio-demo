@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Inbox{% endblock %}
+{% block page_title %}Inbox{% endblock %}
+{% block content %}
+<p class="eyebrow">AI email agent</p>
+<h1 class="display">Inbox</h1>
+<p class="lede">Sorted by what each message asks of you, not by who sent it.
+  Every row carries the reason it is there. Drafting a reply never sends
+  anything — this demonstration has no mail transport at all.</p>
+
+{% macro message(m, decide) %}
+<article class="card" id="m-{{ m.id }}">
+  <div class="row" style="border:0;padding:0">
+    <span class="avatar">{{ m.from_name.split()[0][0] }}{{ m.from_name.split()[-1][0] }}</span>
+    <div style="flex:1;min-width:0">
+      <div class="who">{{ m.from_name }} <span class="muted" style="font-weight:400">· {{ m.from_email }}</span></div>
+      <div class="sub" style="font-weight:600">{{ m.subject }}</div>
+      <div class="why">{{ m.verdict.reason }}</div>
+      <div class="chips">
+        <span class="chip {{ 'decide' if decide else '' }}">{{ m.verdict.label }}</span>
+        <span class="chip">{{ (m.verdict.confidence * 100)|round|int }}% confident</span>
+        {% if m.verdict.suggest_stage %}<span class="chip cool">would move to {{ m.verdict.suggest_stage }}</span>{% endif %}
+        {% if m.status == 'handled' %}<span class="chip decide">handled</span>{% endif %}
+      </div>
+    </div>
+    <span class="when">{{ m.received_hours_ago|ago }}</span>
+  </div>
+
+  <details style="margin-top:12px">
+    <summary class="muted" style="cursor:pointer;font-size:12.5px">Read the message</summary>
+    <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;white-space:pre-wrap">{{ m.body }}</p>
+  </details>
+
+  <div class="draft" id="d-{{ m.id }}" style="{{ '' if m.draft else 'display:none' }}">
+    <h4>Leo's reply <span class="sim">· {{ m.draft_mode or 'simulated' }} · not sent</span></h4>
+    <pre id="dt-{{ m.id }}">{{ m.draft or '' }}</pre>
+    <p class="note">Approving marks the thread handled and updates the creator's
+      stage. No email leaves this machine.</p>
+  </div>
+
+  {% if m.status != 'handled' %}
+  <div class="actions">
+    <button class="btn go" onclick="makeDraft('{{ m.id }}', this)">Draft a reply</button>
+    <button class="btn primary" id="ap-{{ m.id }}" onclick="approve('{{ m.id }}', this)"
+            {{ '' if m.draft else 'disabled' }}>Approve</button>
+  </div>
+  {% endif %}
+</article>
+{% endmacro %}
+
+<h2 class="sec" style="margin-top:0">Needs a decision <span class="chip decide">{{ deciding|length }}</span></h2>
+<p class="sec-sub">Someone is waiting, and only you can move it.</p>
+{% for m in deciding %}{{ message(m, true) }}{% else %}
+<p class="empty card">Nothing waiting on a decision.</p>{% endfor %}
+
+<h2 class="sec">For information <span class="chip">{{ fyi|length }}</span></h2>
+<p class="sec-sub">Delivered content, invoices and updates — nothing to answer.</p>
+{% for m in fyi %}{{ message(m, false) }}{% else %}
+<p class="empty card">Nothing here.</p>{% endfor %}
+
+{% if handled %}
+<h2 class="sec">Handled <span class="chip">{{ handled|length }}</span></h2>
+{% for m in handled %}{{ message(m, false) }}{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function makeDraft(id, btn) {
+  btn.disabled = true; const was = btn.textContent; btn.textContent = 'Thinking…';
+  const d = await post('/inbox/' + id + '/draft');
+  btn.disabled = false; btn.textContent = was;
+  if (!d.ok) { toast(d.error || 'Could not draft that', true); return; }
+  document.getElementById('dt-' + id).textContent = d.draft;
+  document.getElementById('d-' + id).style.display = '';
+  document.getElementById('ap-' + id).disabled = false;
+  toast('Drafted in ' + d.mode + ' mode — nothing sent');
+}
+async function approve(id, btn) {
+  btn.disabled = true;
+  const d = await post('/inbox/' + id + '/approve');
+  if (!d.ok) { btn.disabled = false; toast(d.error, true); return; }
+  toast(d.moved ? ('Approved. ' + d.moved) : 'Approved — no email was sent');
+  setTimeout(() => location.reload(), 900);
+}
+</script>
+{% endblock %}

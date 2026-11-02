@@ -1,0 +1,15 @@
+# Runtime copies of the seed data (regenerated on first run)
+/data/*.json
+
+# Environment
+.env
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# macOS
+.DS_Store

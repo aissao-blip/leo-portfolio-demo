@@ -1,0 +1,209 @@
+/* Leo Portfolio Demo — one stylesheet, written for this project.
+   Light, dense, and calm: the screen is a list of decisions, so the loudest
+   thing on it should be the thing that needs one. */
+
+:root {
+  --ink:#16201b; --muted:#6a7470; --muted-2:#98a19c; --line:#e3e7e2;
+  --paper:#fff; --soft:#f7f9f6; --canvas:#f2f4ef;
+  --forest:#15231c; --forest-2:#1e3228; --lime:#d7fb6f;
+
+  --decide:#1d8f68;  --decide-tint:#e4f7ef;  --decide-ink:#0f6148;
+  --warn:#c9811c;    --warn-tint:#fdf3e2;    --warn-ink:#7c4f08;
+  --stop:#c4553f;    --stop-tint:#fbeae6;    --stop-ink:#7d2b19;
+  --cool:#4f7bc9;    --cool-tint:#e9eff9;    --cool-ink:#214088;
+
+  --r:10px; --r-lg:16px; --pill:999px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:36px;
+  --display:"Fraunces",Georgia,serif;
+  --rail:68px;
+}
+
+* { box-sizing:border-box }
+html,body { margin:0; background:var(--canvas); color:var(--ink);
+            font-family:"Inter",system-ui,-apple-system,sans-serif; font-size:15px }
+a { color:inherit }
+button { font:inherit }
+
+/* ── demo banner ─────────────────────────────────────────────────────── */
+.demo-bar { position:sticky; top:0; z-index:50; display:flex; align-items:center;
+            gap:var(--s3); flex-wrap:wrap; padding:7px var(--s5);
+            background:var(--forest); color:#e8efe9; font-size:12.5px }
+.demo-bar strong { color:var(--lime); letter-spacing:.02em }
+.demo-bar .mode { margin-left:auto; padding:1px 9px; border-radius:var(--pill);
+                  font-weight:600; font-size:11px }
+.mode-simulated { background:rgba(255,255,255,.14) }
+.mode-live { background:var(--lime); color:var(--forest) }
+.demo-bar .reset button { background:none; border:1px solid rgba(255,255,255,.3);
+   color:inherit; border-radius:var(--pill); padding:2px 11px; font-size:11.5px;
+   cursor:pointer }
+.demo-bar .reset button:hover { background:rgba(255,255,255,.12) }
+
+/* ── shell ───────────────────────────────────────────────────────────── */
+.shell { display:flex; min-height:calc(100vh - 31px) }
+.rail { position:sticky; top:31px; align-self:flex-start; width:var(--rail);
+        height:calc(100vh - 31px); background:var(--forest); color:#b7c3bb;
+        display:flex; flex-direction:column; align-items:center; gap:var(--s1);
+        padding:var(--s3) 0 }
+.brand { width:40px; height:40px; border-radius:var(--r); display:grid;
+         place-items:center; background:var(--lime); color:var(--forest);
+         font-family:var(--display); font-weight:700; font-size:18px;
+         text-decoration:none; margin-bottom:var(--s3) }
+.rail nav { display:flex; flex-direction:column; gap:var(--s1); width:100% ;
+            align-items:center }
+.rail nav a { position:relative; width:46px; height:42px; display:grid;
+              place-items:center; border-radius:var(--r); text-decoration:none;
+              font-size:17px; transition:background .13s,color .13s }
+.rail nav a:hover { background:rgba(255,255,255,.09); color:#fff }
+.rail nav a.on { background:var(--lime); color:var(--forest) }
+.rail nav a::after { content:attr(data-label); position:absolute;
+  left:calc(100% + 9px); top:50%; transform:translateY(-50%);
+  background:var(--forest-2); color:#fff; padding:5px 9px; border-radius:6px;
+  font-size:11.5px; font-weight:600; white-space:nowrap; opacity:0;
+  pointer-events:none; transition:opacity .12s; z-index:5 }
+.rail nav a:hover::after { opacity:1 }
+.rail nav a i { position:absolute; top:3px; right:3px; min-width:16px; height:16px;
+  padding:0 4px; border-radius:var(--pill); background:var(--stop); color:#fff;
+  font-style:normal; font-size:10px; font-weight:700; line-height:16px;
+  text-align:center }
+
+main { flex:1; min-width:0 }
+.top { position:sticky; top:31px; z-index:20; display:flex; align-items:center;
+       gap:var(--s3); padding:var(--s3) var(--s6);
+       background:rgba(242,244,239,.93); backdrop-filter:blur(6px);
+       border-bottom:1px solid var(--line) }
+.where { font-family:var(--display); font-size:17px; font-weight:600 }
+.dot { width:5px; height:5px; border-radius:50%; background:var(--decide) }
+.muted { color:var(--muted); font-size:13px }
+.page { padding:var(--s5) var(--s6) var(--s6); max-width:1240px }
+
+/* ── type ────────────────────────────────────────────────────────────── */
+h1.display { font-family:var(--display); font-size:34px; font-weight:600;
+             line-height:1.1; margin:0 0 var(--s2); letter-spacing:-.015em }
+.eyebrow { font-size:11px; font-weight:700; letter-spacing:.12em;
+           text-transform:uppercase; color:var(--decide-ink); margin:0 0 var(--s1) }
+.lede { font-size:15px; line-height:1.55; color:var(--muted); margin:0 0 var(--s5);
+        max-width:66ch }
+h2.sec { font-family:var(--display); font-size:19px; font-weight:600;
+         margin:var(--s6) 0 var(--s2) }
+.sec-sub { font-size:12.5px; color:var(--muted); margin:0 0 var(--s3) }
+
+/* ── cards & stats ───────────────────────────────────────────────────── */
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+         gap:var(--s3); margin:0 0 var(--s5) }
+.stat { background:var(--paper); border:1px solid var(--line);
+        border-radius:var(--r-lg); padding:var(--s4) }
+.stat b { display:block; font-family:var(--display); font-size:30px;
+          font-weight:600; line-height:1 }
+.stat span { display:block; margin-top:5px; font-size:12.5px; color:var(--muted) }
+.stat.hot b { color:var(--stop-ink) }
+.stat.warm b { color:var(--warn-ink) }
+
+.card { background:var(--paper); border:1px solid var(--line);
+        border-radius:var(--r-lg); padding:var(--s5); margin:0 0 var(--s4) }
+.card.flush { padding:0; overflow:hidden }
+
+/* ── rows ────────────────────────────────────────────────────────────── */
+.row { display:flex; gap:var(--s3); padding:var(--s3) 0;
+       border-top:1px solid var(--line) }
+.row:first-of-type { border-top:0 }
+.row .who { font-weight:600; font-size:14px }
+.row .sub { font-size:13px; color:var(--ink); margin-top:1px }
+.row .why { font-size:12.5px; line-height:1.5; color:var(--decide-ink);
+            margin-top:3px }
+.row .when { margin-left:auto; font-size:11.5px; color:var(--muted-2);
+             white-space:nowrap }
+.avatar { flex:none; width:34px; height:34px; border-radius:50%;
+          display:grid; place-items:center; background:var(--decide-tint);
+          color:var(--decide-ink); font-size:12px; font-weight:700 }
+
+/* ── chips ───────────────────────────────────────────────────────────── */
+.chip { display:inline-block; padding:1px 9px; border-radius:var(--pill);
+        font-size:11px; font-weight:600; background:var(--soft);
+        color:var(--muted); border:1px solid var(--line) }
+.chip.decide { background:var(--decide-tint); color:var(--decide-ink);
+               border-color:var(--decide) }
+.chip.warn { background:var(--warn-tint); color:var(--warn-ink);
+             border-color:var(--warn) }
+.chip.stop { background:var(--stop-tint); color:var(--stop-ink);
+             border-color:var(--stop) }
+.chip.cool { background:var(--cool-tint); color:var(--cool-ink);
+             border-color:var(--cool) }
+.chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px }
+
+/* ── buttons ─────────────────────────────────────────────────────────── */
+.btn { display:inline-block; padding:6px 14px; border-radius:var(--pill);
+       border:1px solid var(--line); background:var(--paper); color:var(--ink);
+       font-size:13px; font-weight:600; cursor:pointer; text-decoration:none;
+       transition:background .13s,border-color .13s,color .13s }
+.btn:hover { background:var(--soft) }
+.btn.primary { background:var(--forest); border-color:var(--forest); color:#fff }
+.btn.primary:hover { background:var(--forest-2) }
+.btn.go { background:var(--decide); border-color:var(--decide); color:#fff }
+.btn.go:hover { filter:brightness(1.07) }
+.btn[disabled] { opacity:.5; cursor:default }
+.btn.small { padding:3px 10px; font-size:11.5px }
+.actions { display:flex; flex-wrap:wrap; gap:var(--s2); margin-top:var(--s3) }
+
+/* ── tables ──────────────────────────────────────────────────────────── */
+table { width:100%; border-collapse:collapse; font-size:13.5px }
+th { text-align:left; font-size:10.5px; letter-spacing:.07em;
+     text-transform:uppercase; color:var(--muted-2); font-weight:700;
+     padding:var(--s3) var(--s4); border-bottom:1px solid var(--line);
+     background:var(--soft) }
+td { padding:var(--s3) var(--s4); border-bottom:1px solid var(--line);
+     vertical-align:middle }
+tr:last-child td { border-bottom:0 }
+tbody tr:hover { background:var(--soft) }
+td a { font-weight:600; text-decoration:none }
+td a:hover { color:var(--decide-ink); text-decoration:underline }
+
+/* ── filters ─────────────────────────────────────────────────────────── */
+.filters { display:flex; flex-wrap:wrap; gap:var(--s2); align-items:center;
+           margin:0 0 var(--s4) }
+.filters input { flex:1; min-width:200px; padding:7px var(--s3);
+  border:1px solid var(--line); border-radius:var(--pill); font:inherit;
+  font-size:13px; background:var(--paper) }
+.filters input:focus { outline:2px solid var(--decide); outline-offset:-1px }
+.tag { padding:4px 11px; border-radius:var(--pill); border:1px solid var(--line);
+       background:var(--paper); font-size:12px; font-weight:600;
+       text-decoration:none; color:var(--muted) }
+.tag.on { background:var(--forest); border-color:var(--forest); color:#fff }
+
+/* ── progress ────────────────────────────────────────────────────────── */
+.bar { height:7px; border-radius:var(--pill); background:var(--line);
+       overflow:hidden; margin:var(--s2) 0 }
+.bar i { display:block; height:100%; background:var(--decide); border-radius:inherit }
+
+/* ── draft panel ─────────────────────────────────────────────────────── */
+.draft { margin-top:var(--s3); padding:var(--s4); border-radius:var(--r);
+         background:var(--soft); border-left:3px solid var(--decide) }
+.draft h4 { margin:0 0 var(--s2); font-size:10.5px; letter-spacing:.07em;
+            text-transform:uppercase; color:var(--decide-ink) }
+.draft pre { margin:0; font-family:inherit; font-size:13.5px; line-height:1.6;
+             white-space:pre-wrap; color:var(--ink) }
+.draft .note { margin-top:var(--s2); font-size:11.5px; color:var(--muted) }
+
+/* ── misc ────────────────────────────────────────────────────────────── */
+.grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+         gap:var(--s4) }
+.kv { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:var(--s3); margin:var(--s4) 0 0 }
+.kv div { background:var(--soft); border-radius:var(--r); padding:var(--s2) var(--s3) }
+.kv b { display:block; font-size:10.5px; letter-spacing:.06em;
+        text-transform:uppercase; color:var(--muted-2) }
+.kv span { font-size:14px; font-weight:600 }
+.empty { padding:var(--s5); text-align:center; color:var(--muted); font-size:13.5px }
+.sim { color:var(--muted-2); font-size:11.5px }
+
+.toast { position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(14px);
+  background:var(--forest); color:#fff; padding:10px 18px; border-radius:var(--pill);
+  font-size:13.5px; opacity:0; pointer-events:none; transition:all .2s; z-index:99 }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0) }
+.toast.bad { background:var(--stop) }
+
+@media (max-width:860px) {
+  :root { --rail:54px; --s6:18px }
+  .page { padding:var(--s4) var(--s4) var(--s5) }
+  .demo-bar .mode { margin-left:0 }
+}
+@media (prefers-reduced-motion:reduce) { * { transition:none !important } }

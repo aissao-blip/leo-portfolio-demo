@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Leo{% endblock %} · Leo Portfolio Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body>
+
+<div class="demo-bar">
+  <strong>Portfolio demonstration</strong>
+  <span>Fictional data. Nothing is sent, posted, or connected to any real system.</span>
+  <span class="mode mode-{{ ai_mode }}">AI mode: {{ ai_mode }}</span>
+  <form method="post" action="{{ url_for('reset') }}" class="reset"
+        onsubmit="return confirm('Restore the fictional dataset? Any changes you have made in the demo will be discarded.')">
+    <button type="submit">Reset demo data</button>
+  </form>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <a class="brand" href="{{ url_for('dashboard') }}">L</a>
+    <nav>
+      {% set items = [
+        ('dashboard','Today','▦'), ('inbox_page','Inbox','✉'),
+        ('creators_page','Creators','☰'), ('outreach_page','Outreach','↗'),
+        ('campaigns_page','Campaigns','◆'), ('briefing_page','Briefing','☀'),
+        ('activity_page','Activity','≡')] %}
+      {% for endpoint, label, glyph in items %}
+      <a href="{{ url_for(endpoint) }}" data-label="{{ label }}"
+         class="{{ 'on' if request.endpoint == endpoint }}">
+        <span>{{ glyph }}</span>
+        {% if endpoint == 'inbox_page' and nav_waiting %}<i>{{ nav_waiting }}</i>{% endif %}
+      </a>
+      {% endfor %}
+    </nav>
+  </aside>
+
+  <main>
+    <header class="top">
+      <span class="where">{% block page_title %}Today{% endblock %}</span>
+      <span class="dot"></span><span class="muted">{{ today }}</span>
+    </header>
+    <div class="page">{% block content %}{% endblock %}</div>
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+<script>
+function toast(text, bad) {
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.className = 'toast show' + (bad ? ' bad' : '');
+  setTimeout(() => { t.className = 'toast'; }, 3200);
+}
+async function post(url, body) {
+  const r = await fetch(url, {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body || {})
+  });
+  return r.json();
+}
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,651 @@
+[
+  {
+    "id": "cr-001",
+    "name": "Kwame Castellanos",
+    "handle": "@kwamehandy",
+    "company": "Castellanos Handyman",
+    "email": "kwame@handydemo.example",
+    "trade": "Handyman",
+    "platform": "YouTube",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Active Partner",
+    "city": "Austin TX",
+    "first_contacted": "2026-07-07",
+    "last_activity": "2026-08-15",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-002",
+    "name": "Priya Vance",
+    "handle": "@priyaroofing",
+    "company": "Vance Roofing",
+    "email": "priya@roofingdemo.example",
+    "trade": "Roofing",
+    "platform": "YouTube",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Contacted",
+    "city": "Calgary AB",
+    "first_contacted": "2026-10-02",
+    "last_activity": "2026-10-21",
+    "notes": "",
+    "sequence": {
+      "stage": 1,
+      "status": "running",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-28",
+          "subject": "Intro"
+        }
+      ],
+      "next_due": "2026-11-06",
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-003",
+    "name": "Rafael Castellanos",
+    "handle": "@rafaelplumbing",
+    "company": "Castellanos Plumbing",
+    "email": "rafael@plumbingdemo.example",
+    "trade": "Plumbing",
+    "platform": "LinkedIn",
+    "tier": "Micro",
+    "audience": "10k-50k",
+    "monthly_fee": 500,
+    "stage": "Active Partner",
+    "city": "Toronto ON",
+    "first_contacted": "2026-07-11",
+    "last_activity": "2026-08-04",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-004",
+    "name": "Kwame Moreau",
+    "handle": "@kwamepool",
+    "company": "Moreau Pool Service",
+    "email": "kwame@pooldemo.example",
+    "trade": "Pool Service",
+    "platform": "Instagram",
+    "tier": "Nano",
+    "audience": "1k-10k",
+    "monthly_fee": 250,
+    "stage": "In Conversation",
+    "city": "Denver CO",
+    "first_contacted": "2026-07-14",
+    "last_activity": "2026-08-03",
+    "notes": "",
+    "sequence": {
+      "stage": 2,
+      "status": "replied",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-23",
+          "subject": "Intro"
+        },
+        {
+          "stage": 2,
+          "on": "2026-10-28",
+          "subject": "Following up"
+        }
+      ],
+      "next_due": null,
+      "stop_reason": "They replied \u2014 the sequence stops."
+    },
+    "history": []
+  },
+  {
+    "id": "cr-005",
+    "name": "Rosa Castellanos",
+    "handle": "@rosaclean",
+    "company": "Castellanos Cleaning",
+    "email": "rosa@cleandemo.example",
+    "trade": "Cleaning",
+    "platform": "YouTube",
+    "tier": "Macro",
+    "audience": "250k-1M",
+    "monthly_fee": 1800,
+    "stage": "In Conversation",
+    "city": "Ottawa ON",
+    "first_contacted": "2026-08-07",
+    "last_activity": "2026-08-16",
+    "notes": "",
+    "sequence": {
+      "stage": 3,
+      "status": "replied",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-18",
+          "subject": "Intro"
+        },
+        {
+          "stage": 2,
+          "on": "2026-10-23",
+          "subject": "Following up"
+        },
+        {
+          "stage": 3,
+          "on": "2026-10-28",
+          "subject": "Last note"
+        }
+      ],
+      "next_due": null,
+      "stop_reason": "They replied \u2014 the sequence stops."
+    },
+    "history": []
+  },
+  {
+    "id": "cr-006",
+    "name": "Kwame Delgado",
+    "handle": "@kwamehvac",
+    "company": "Delgado HVAC",
+    "email": "kwame@hvacdemo.example",
+    "trade": "HVAC",
+    "platform": "TikTok",
+    "tier": "Nano",
+    "audience": "1k-10k",
+    "monthly_fee": 250,
+    "stage": "Renewal Due",
+    "city": "Calgary AB",
+    "first_contacted": "2026-09-01",
+    "last_activity": "2026-09-20",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-007",
+    "name": "Fiona Gallagher",
+    "handle": "@fionaroofing",
+    "company": "Gallagher Roofing",
+    "email": "fiona@roofingdemo.example",
+    "trade": "Roofing",
+    "platform": "TikTok",
+    "tier": "Macro",
+    "audience": "250k-1M",
+    "monthly_fee": 1800,
+    "stage": "Contacted",
+    "city": "Austin TX",
+    "first_contacted": "2026-07-11",
+    "last_activity": "2026-08-15",
+    "notes": "",
+    "sequence": {
+      "stage": 1,
+      "status": "running",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-28",
+          "subject": "Intro"
+        }
+      ],
+      "next_due": "2026-11-07",
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-008",
+    "name": "Dana Boyd",
+    "handle": "@danahvac",
+    "company": "Boyd HVAC",
+    "email": "dana@hvacdemo.example",
+    "trade": "HVAC",
+    "platform": "YouTube",
+    "tier": "Macro",
+    "audience": "250k-1M",
+    "monthly_fee": 1800,
+    "stage": "New",
+    "city": "Denver CO",
+    "first_contacted": "2026-06-08",
+    "last_activity": "2026-07-16",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-009",
+    "name": "Jonah Whitfield",
+    "handle": "@jonahclean",
+    "company": "Whitfield Cleaning",
+    "email": "jonah@cleandemo.example",
+    "trade": "Cleaning",
+    "platform": "Instagram",
+    "tier": "Micro",
+    "audience": "10k-50k",
+    "monthly_fee": 500,
+    "stage": "Active Partner",
+    "city": "Denver CO",
+    "first_contacted": "2026-06-05",
+    "last_activity": "2026-06-14",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-010",
+    "name": "Elena Haddad",
+    "handle": "@elenapest",
+    "company": "Haddad Pest Control",
+    "email": "elena@pestdemo.example",
+    "trade": "Pest Control",
+    "platform": "LinkedIn",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Contacted",
+    "city": "Austin TX",
+    "first_contacted": "2026-06-12",
+    "last_activity": "2026-06-22",
+    "notes": "",
+    "sequence": {
+      "stage": 2,
+      "status": "running",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-23",
+          "subject": "Intro"
+        },
+        {
+          "stage": 2,
+          "on": "2026-10-28",
+          "subject": "Following up"
+        }
+      ],
+      "next_due": "2026-11-06",
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-011",
+    "name": "Ingrid Ibarra",
+    "handle": "@ingridelectric",
+    "company": "Ibarra Electrical",
+    "email": "ingrid@electricdemo.example",
+    "trade": "Electrical",
+    "platform": "TikTok",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Declined",
+    "city": "Denver CO",
+    "first_contacted": "2026-08-28",
+    "last_activity": "2026-09-23",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-012",
+    "name": "Rafael Sorensen",
+    "handle": "@rafaelclean",
+    "company": "Sorensen Cleaning",
+    "email": "rafael@cleandemo.example",
+    "trade": "Cleaning",
+    "platform": "YouTube",
+    "tier": "Macro",
+    "audience": "250k-1M",
+    "monthly_fee": 1800,
+    "stage": "Negotiating",
+    "city": "Austin TX",
+    "first_contacted": "2026-06-14",
+    "last_activity": "2026-07-08",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-013",
+    "name": "Fiona Lund",
+    "handle": "@fionapest",
+    "company": "Lund Pest Control",
+    "email": "fiona@pestdemo.example",
+    "trade": "Pest Control",
+    "platform": "Instagram",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Declined",
+    "city": "Manchester UK",
+    "first_contacted": "2026-08-08",
+    "last_activity": "2026-09-04",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-014",
+    "name": "Wesley Asante",
+    "handle": "@wesleyelectric",
+    "company": "Asante Electrical",
+    "email": "wesley@electricdemo.example",
+    "trade": "Electrical",
+    "platform": "Instagram",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Contacted",
+    "city": "Manchester UK",
+    "first_contacted": "2026-09-25",
+    "last_activity": "2026-10-14",
+    "notes": "",
+    "sequence": {
+      "stage": 3,
+      "status": "running",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-18",
+          "subject": "Intro"
+        },
+        {
+          "stage": 2,
+          "on": "2026-10-23",
+          "subject": "Following up"
+        },
+        {
+          "stage": 3,
+          "on": "2026-10-28",
+          "subject": "Last note"
+        }
+      ],
+      "next_due": "2026-11-07",
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-015",
+    "name": "Wesley Novak",
+    "handle": "@wesleylawn",
+    "company": "Novak Landscaping",
+    "email": "wesley@lawndemo.example",
+    "trade": "Landscaping",
+    "platform": "YouTube",
+    "tier": "Micro",
+    "audience": "10k-50k",
+    "monthly_fee": 500,
+    "stage": "Declined",
+    "city": "Leeds UK",
+    "first_contacted": "2026-09-03",
+    "last_activity": "2026-10-05",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-016",
+    "name": "Elena Raman",
+    "handle": "@elenahandy",
+    "company": "Raman Handyman",
+    "email": "elena@handydemo.example",
+    "trade": "Handyman",
+    "platform": "YouTube",
+    "tier": "Nano",
+    "audience": "1k-10k",
+    "monthly_fee": 250,
+    "stage": "Active Partner",
+    "city": "Toronto ON",
+    "first_contacted": "2026-05-22",
+    "last_activity": "2026-06-19",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-017",
+    "name": "Simone Fairbanks",
+    "handle": "@simonepest",
+    "company": "Fairbanks Pest Control",
+    "email": "simone@pestdemo.example",
+    "trade": "Pest Control",
+    "platform": "TikTok",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Contacted",
+    "city": "Leeds UK",
+    "first_contacted": "2026-06-04",
+    "last_activity": "2026-06-09",
+    "notes": "",
+    "sequence": {
+      "stage": 1,
+      "status": "running",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-28",
+          "subject": "Intro"
+        }
+      ],
+      "next_due": "2026-11-05",
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-018",
+    "name": "Victor Lund",
+    "handle": "@victorlawn",
+    "company": "Lund Landscaping",
+    "email": "victor@lawndemo.example",
+    "trade": "Landscaping",
+    "platform": "TikTok",
+    "tier": "Macro",
+    "audience": "250k-1M",
+    "monthly_fee": 1800,
+    "stage": "Active Partner",
+    "city": "Austin TX",
+    "first_contacted": "2026-05-21",
+    "last_activity": "2026-06-12",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-019",
+    "name": "Rafael Ibarra",
+    "handle": "@rafaelhandy",
+    "company": "Ibarra Handyman",
+    "email": "rafael@handydemo.example",
+    "trade": "Handyman",
+    "platform": "TikTok",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Contacted",
+    "city": "Manchester UK",
+    "first_contacted": "2026-10-27",
+    "last_activity": "2026-11-18",
+    "notes": "",
+    "sequence": {
+      "stage": 2,
+      "status": "running",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-23",
+          "subject": "Intro"
+        },
+        {
+          "stage": 2,
+          "on": "2026-10-28",
+          "subject": "Following up"
+        }
+      ],
+      "next_due": "2026-11-07",
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-020",
+    "name": "Rafael Fairbanks",
+    "handle": "@rafaelhandy",
+    "company": "Fairbanks Handyman",
+    "email": "rafael@handydemo.example",
+    "trade": "Handyman",
+    "platform": "TikTok",
+    "tier": "Nano",
+    "audience": "1k-10k",
+    "monthly_fee": 250,
+    "stage": "In Conversation",
+    "city": "Austin TX",
+    "first_contacted": "2026-09-25",
+    "last_activity": "2026-10-21",
+    "notes": "",
+    "sequence": {
+      "stage": 3,
+      "status": "replied",
+      "sent": [
+        {
+          "stage": 1,
+          "on": "2026-10-18",
+          "subject": "Intro"
+        },
+        {
+          "stage": 2,
+          "on": "2026-10-23",
+          "subject": "Following up"
+        },
+        {
+          "stage": 3,
+          "on": "2026-10-28",
+          "subject": "Last note"
+        }
+      ],
+      "next_due": null,
+      "stop_reason": "They replied \u2014 the sequence stops."
+    },
+    "history": []
+  },
+  {
+    "id": "cr-021",
+    "name": "Oscar Vance",
+    "handle": "@oscarpainting",
+    "company": "Vance Painting",
+    "email": "oscar@paintingdemo.example",
+    "trade": "Painting",
+    "platform": "Instagram",
+    "tier": "Mid",
+    "audience": "50k-250k",
+    "monthly_fee": 900,
+    "stage": "Renewal Due",
+    "city": "Austin TX",
+    "first_contacted": "2026-06-28",
+    "last_activity": "2026-07-15",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  },
+  {
+    "id": "cr-022",
+    "name": "Victor Reyes",
+    "handle": "@victorroofing",
+    "company": "Reyes Roofing",
+    "email": "victor@roofingdemo.example",
+    "trade": "Roofing",
+    "platform": "Instagram",
+    "tier": "Micro",
+    "audience": "10k-50k",
+    "monthly_fee": 500,
+    "stage": "Active Partner",
+    "city": "Phoenix AZ",
+    "first_contacted": "2026-08-09",
+    "last_activity": "2026-09-03",
+    "notes": "",
+    "sequence": {
+      "stage": 0,
+      "status": "not started",
+      "sent": [],
+      "next_due": null,
+      "stop_reason": ""
+    },
+    "history": []
+  }
+]

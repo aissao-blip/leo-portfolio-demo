@@ -1,0 +1,9 @@
+# Leo Portfolio Demo — everything the demonstration needs.
+#
+# One dependency. The demo runs fully without an API key, without a database
+# and without a build step.
+Flask>=3.0,<4.0
+
+# Optional. Only needed if you switch LEO_DEMO_AI_MODE to "live" in .env and
+# supply your own Anthropic key. The demo is complete without it.
+# anthropic>=0.40

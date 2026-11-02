@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Today{% endblock %}
+{% block page_title %}Today{% endblock %}
+{% block content %}
+<p class="eyebrow">Creator partnerships</p>
+<h1 class="display">Good day, Aissa.</h1>
+<p class="lede">
+  {% if deciding_total %}{{ deciding_total }} email{{ '' if deciding_total == 1 else 's' }} need{{ 's' if deciding_total == 1 else '' }} a decision{% else %}Nothing is waiting on a decision{% endif %}{% if renewals %},
+  and {{ renewals|length }} partnership{{ '' if renewals|length == 1 else 's' }} {{ 'is' if renewals|length == 1 else 'are' }} up for renewal{% endif %}.
+</p>
+
+<div class="stats">
+  <div class="stat"><b>{{ total }}</b><span>Creators in the pipeline</span></div>
+  <div class="stat"><b>{{ active }}</b><span>Active partnerships</span></div>
+  <div class="stat{{ ' hot' if deciding_total }}"><b>{{ deciding_total }}</b><span>Replies needing a decision</span></div>
+  <div class="stat"><b>{{ in_sequence }}</b><span>In an outreach sequence</span></div>
+  <div class="stat{{ ' warm' if renewals }}"><b>{{ renewals|length }}</b><span>Renewals due</span></div>
+  <div class="stat"><b>{{ progress }}%</b><span>Campaign progress</span></div>
+</div>
+
+<div class="grid2">
+  <section class="card">
+    <h2 class="sec" style="margin-top:0">Needs a decision</h2>
+    <p class="sec-sub">Someone is waiting, and only you can move it.</p>
+    {% for m in deciding %}
+    <div class="row">
+      <span class="avatar">{{ m.from_name.split()[0][0] }}{{ m.from_name.split()[-1][0] }}</span>
+      <div style="min-width:0">
+        <div class="who">{{ m.from_name }}</div>
+        <div class="sub">{{ m.subject }}</div>
+        <div class="why">{{ m.verdict.reason }}</div>
+      </div>
+      <span class="when">{{ m.received_hours_ago|ago }}</span>
+    </div>
+    {% else %}
+    <p class="empty">Nothing waiting. The inbox is clear.</p>
+    {% endfor %}
+    {% if deciding_total > deciding|length %}
+    <div class="actions"><a class="btn small" href="{{ url_for('inbox_page') }}">
+      {{ deciding_total - deciding|length }} more in the inbox →</a></div>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <h2 class="sec" style="margin-top:0">Pipeline</h2>
+    <p class="sec-sub">Where every creator currently sits.</p>
+    {% set biggest = by_stage|map(attribute='count')|max %}
+    {% for s in by_stage %}
+    <div style="display:flex;align-items:center;gap:12px;padding:5px 0">
+      <span style="width:118px;font-size:12.5px;color:var(--muted)">{{ s.stage }}</span>
+      <span class="bar" style="flex:1;margin:0">
+        <i style="width:{{ (100 * s.count / biggest)|round|int if biggest else 0 }}%"></i></span>
+      <b style="width:22px;text-align:right;font-size:13px">{{ s.count }}</b>
+    </div>
+    {% endfor %}
+    <div class="actions"><a class="btn small" href="{{ url_for('creators_page') }}">Open the CRM →</a></div>
+  </section>
+</div>
+
+<h2 class="sec">Active campaigns</h2>
+<div class="grid2">
+  {% for c in campaigns %}
+  <section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+      <strong style="font-family:var(--display);font-size:17px">{{ c.name }}</strong>
+      <span class="chip decide">{{ c.progress }}%</span>
+    </div>
+    <p class="sec-sub" style="margin-top:4px">{{ c.goal }}</p>
+    <span class="bar"><i style="width:{{ c.progress }}%"></i></span>
+    <div class="chips">
+      <span class="chip">{{ c.participants|length }} creators</span>
+      <span class="chip">ends {{ c.ends }}</span>
+      <span class="chip cool">{{ '{:,}'.format(c.metrics.reach) }} reach</span>
+    </div>
+  </section>
+  {% endfor %}
+</div>
+
+<h2 class="sec">Recent agent activity</h2>
+<section class="card flush">
+  <table>
+    <tbody>
+      {% for a in activity %}
+      <tr>
+        <td style="width:92px"><span class="chip {{ 'warn' if a.kind == 'simulated' else 'decide' }}">{{ a.kind }}</span></td>
+        <td>{{ a.text }}</td>
+        <td class="muted" style="width:150px">{{ a.at[:16].replace('T',' ') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

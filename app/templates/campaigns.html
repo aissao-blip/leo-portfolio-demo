@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Campaigns{% endblock %}
+{% block page_title %}Campaigns{% endblock %}
+{% block content %}
+<p class="eyebrow">Campaign tracker</p>
+<h1 class="display">Campaigns</h1>
+<p class="lede">Deliverables, deadlines and progress per creator. Ticking a
+  deliverable writes to the demo's data file and shows in the activity log as a
+  real change.</p>
+
+{% for c in campaigns %}
+<section class="card">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+    <div>
+      <strong style="font-family:var(--display);font-size:21px">{{ c.name }}</strong>
+      <div class="sec-sub" style="margin:4px 0 0">{{ c.goal }}</div>
+    </div>
+    <span class="chip {{ 'decide' if c.status == 'active' else 'cool' if c.status == 'upcoming' else '' }}">{{ c.status }}</span>
+  </div>
+
+  <div class="kv">
+    <div><b>Runs</b><span>{{ c.starts }} → {{ c.ends }}</span></div>
+    <div><b>Budget</b><span>${{ '{:,}'.format(c.budget) }}</span></div>
+    <div><b>Reach</b><span>{{ '{:,}'.format(c.metrics.reach) }}</span></div>
+    <div><b>Clicks</b><span>{{ '{:,}'.format(c.metrics.clicks) }}</span></div>
+    <div><b>Trials</b><span>{{ c.metrics.trials }}</span></div>
+  </div>
+
+  <div style="margin-top:16px">
+    <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)">
+      <span>Deliverables complete</span><span id="pt-{{ c.id }}">{{ c.progress }}%</span>
+    </div>
+    <span class="bar"><i id="pb-{{ c.id }}" style="width:{{ c.progress }}%"></i></span>
+  </div>
+
+  <table style="margin-top:12px">
+    <thead><tr><th>Creator</th><th>Deliverables</th><th>Due</th><th>Progress</th><th></th></tr></thead>
+    <tbody>
+      {% for p in c.participants %}
+      <tr>
+        <td><a href="{{ url_for('creator_detail', cid=p.creator_id) }}">{{ p.name }}</a></td>
+        <td class="muted">{{ p.deliverables|join(' · ') }}</td>
+        <td class="muted">{{ p.due }}</td>
+        <td><span class="chip {{ 'decide' if p.completed == p.total else 'warn' }}"
+                 id="c-{{ c.id }}-{{ p.creator_id }}">{{ p.completed }}/{{ p.total }}</span></td>
+        <td>{% if p.completed < p.total %}
+          <button class="btn small go" onclick="tick('{{ c.id }}','{{ p.creator_id }}',this)">Mark one done</button>
+        {% else %}<span class="muted">complete</span>{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function tick(cid, who, btn) {
+  btn.disabled = true;
+  const d = await post('/campaigns/' + cid + '/tick', {creator_id: who});
+  if (!d.ok) { btn.disabled = false; toast(d.error, true); return; }
+  toast('Deliverable marked complete');
+  setTimeout(() => location.reload(), 700);
+}
+</script>
+{% endblock %}

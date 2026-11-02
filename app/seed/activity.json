@@ -1,0 +1,37 @@
+[
+  {
+    "id": "act-001",
+    "kind": "simulated",
+    "text": "Classified 8 inbound emails by intent",
+    "actor": "agent",
+    "at": "2026-11-02"
+  },
+  {
+    "id": "act-002",
+    "kind": "simulated",
+    "text": "Drafted a reply to Dana Whitfield for review",
+    "actor": "agent",
+    "at": "2026-11-02"
+  },
+  {
+    "id": "act-003",
+    "kind": "simulated",
+    "text": "Advanced 3 creators to outreach stage 2",
+    "actor": "agent",
+    "at": "2026-11-02"
+  },
+  {
+    "id": "act-004",
+    "kind": "simulated",
+    "text": "Flagged 2 renewals due inside 14 days",
+    "actor": "agent",
+    "at": "2026-11-02"
+  },
+  {
+    "id": "act-005",
+    "kind": "real",
+    "text": "Seeded the demonstration dataset",
+    "actor": "system",
+    "at": "2026-11-02"
+  }
+]

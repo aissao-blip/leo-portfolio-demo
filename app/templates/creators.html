@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Creators{% endblock %}
+{% block page_title %}Creators{% endblock %}
+{% block content %}
+<p class="eyebrow">Partnership CRM</p>
+<h1 class="display">Creators</h1>
+<p class="lede">{{ creators|length }} shown. Filter by stage, search by name,
+  trade, platform or city, and open anyone to see their history.</p>
+
+<form class="filters" method="get">
+  <input name="q" value="{{ q }}" placeholder="Search name, company, trade, city…">
+  <button class="btn" type="submit">Search</button>
+  {% if q or stage %}<a class="btn" href="{{ url_for('creators_page') }}">Clear</a>{% endif %}
+</form>
+
+<div class="filters">
+  <a class="tag {{ 'on' if not stage }}" href="{{ url_for('creators_page', q=q) }}">All</a>
+  {% for s in stages %}
+  <a class="tag {{ 'on' if stage == s }}"
+     href="{{ url_for('creators_page', stage=s, q=q) }}">{{ s }} {{ counts[s] }}</a>
+  {% endfor %}
+</div>
+
+<section class="card flush">
+  <table>
+    <thead><tr><th>Creator</th><th>Trade</th><th>Platform</th><th>Tier</th>
+      <th>Fee</th><th>Stage</th><th>Sequence</th><th>Last activity</th></tr></thead>
+    <tbody>
+      {% for c in creators %}
+      <tr>
+        <td>
+          <a href="{{ url_for('creator_detail', cid=c.id) }}">{{ c.name }}</a>
+          <div class="muted" style="font-size:11.5px">{{ c.handle }} · {{ c.city }}</div>
+        </td>
+        <td>{{ c.trade }}</td>
+        <td>{{ c.platform }}</td>
+        <td>{{ c.tier }} <span class="muted">{{ c.audience }}</span></td>
+        <td>${{ c.monthly_fee }}</td>
+        <td><span class="chip {{ 'decide' if c.stage == 'Active Partner'
+                               else 'warn' if c.stage == 'Renewal Due'
+                               else 'stop' if c.stage == 'Declined' else 'cool' }}">{{ c.stage }}</span></td>
+        <td>{% set s = c.sequence %}{% if s.status == 'not started' %}<span class="muted">—</span>
+            {% else %}<span class="chip">{{ s.stage }}/3 · {{ s.status }}</span>{% endif %}</td>
+        <td class="muted">{{ c.last_activity }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8" class="empty">No creators match that.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

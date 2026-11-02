@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Briefing{% endblock %}
+{% block page_title %}Briefing{% endblock %}
+{% block content %}
+<p class="eyebrow">Daily briefing · {{ b.generated_for }}</p>
+<h1 class="display">What needs you today</h1>
+<p class="lede">Assembled from the current state of the demo data, not written
+  in advance. Change something and come back — the briefing changes with it.</p>
+
+<section class="card">
+  <h2 class="sec" style="margin-top:0">Do now</h2>
+  {% for a in b.actions %}
+  <div class="row"><span class="avatar">{{ loop.index }}</span>
+    <div class="who" style="align-self:center">{{ a }}</div></div>
+  {% endfor %}
+</section>
+
+<div class="grid2">
+  <section class="card">
+    <h2 class="sec" style="margin-top:0">Waiting on a decision <span class="chip decide">{{ b.needs_decision|length }}</span></h2>
+    {% for m in b.needs_decision %}
+    <div class="row"><div style="flex:1;min-width:0">
+      <div class="who">{{ m.from_name }}</div>
+      <div class="sub">{{ m.subject }}</div>
+      <div class="why">{{ m.verdict.reason }}</div>
+    </div><span class="when">{{ m.received_hours_ago|ago }}</span></div>
+    {% else %}<p class="empty">Nothing waiting.</p>{% endfor %}
+    <div class="actions"><a class="btn small" href="{{ url_for('inbox_page') }}">Open the inbox →</a></div>
+  </section>
+
+  <section class="card">
+    <h2 class="sec" style="margin-top:0">Renewals due <span class="chip warn">{{ b.renewals|length }}</span></h2>
+    {% for c in b.renewals %}
+    <div class="row"><div style="flex:1">
+      <div class="who"><a href="{{ url_for('creator_detail', cid=c.id) }}">{{ c.name }}</a></div>
+      <div class="muted" style="font-size:12.5px">{{ c.company }} · ${{ c.monthly_fee }}/month</div>
+    </div><span class="chip warn">{{ c.tier }}</span></div>
+    {% else %}<p class="empty">No renewals in the window.</p>{% endfor %}
+  </section>
+
+  <section class="card">
+    <h2 class="sec" style="margin-top:0">Follow-ups due <span class="chip">{{ b.follow_ups|length }}</span></h2>
+    {% for c in b.follow_ups %}
+    <div class="row"><div style="flex:1">
+      <div class="who"><a href="{{ url_for('creator_detail', cid=c.id) }}">{{ c.name }}</a></div>
+      <div class="muted" style="font-size:12.5px">stage {{ c.sequence.stage }} of 3 · due {{ c.sequence.next_due }}</div>
+    </div></div>
+    {% else %}<p class="empty">Nothing due.</p>{% endfor %}
+    <div class="actions"><a class="btn small" href="{{ url_for('outreach_page') }}">Open outreach →</a></div>
+  </section>
+
+  <section class="card">
+    <h2 class="sec" style="margin-top:0">Deliverables past their date <span class="chip stop">{{ b.deadlines|length }}</span></h2>
+    {% for d in b.deadlines %}
+    <div class="row"><div style="flex:1">
+      <div class="who">{{ d.name }}</div>
+      <div class="muted" style="font-size:12.5px">{{ d.campaign }} · due {{ d.due }}</div>
+    </div><span class="chip stop">{{ d.completed }}/{{ d.total }}</span></div>
+    {% else %}<p class="empty">Everything is on time.</p>{% endfor %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{ c.name }}{% endblock %}
+{% block page_title %}{{ c.name }}{% endblock %}
+{% block content %}
+<a class="btn small" href="{{ url_for('creators_page') }}">← All creators</a>
+
+<h1 class="display" style="margin-top:16px">{{ c.name }}</h1>
+<p class="lede">{{ c.handle }} · {{ c.company }} · {{ c.trade }} · {{ c.city }}</p>
+
+<div class="kv">
+  <div><b>Stage</b><span>{{ c.stage }}</span></div>
+  <div><b>Platform</b><span>{{ c.platform }}</span></div>
+  <div><b>Tier</b><span>{{ c.tier }} · {{ c.audience }}</span></div>
+  <div><b>Monthly fee</b><span>${{ c.monthly_fee }}</span></div>
+  <div><b>First contacted</b><span>{{ c.first_contacted }}</span></div>
+  <div><b>Last activity</b><span>{{ c.last_activity }}</span></div>
+</div>
+
+<section class="card" style="margin-top:24px">
+  <h2 class="sec" style="margin-top:0">Move them along</h2>
+  <p class="sec-sub">Changing the stage here writes to the demo's data file —
+    that is a real change on your machine, and it shows in the activity log as one.</p>
+  <form method="post" action="{{ url_for('move_stage', cid=c.id) }}" class="filters">
+    <select name="stage" class="btn" style="padding:6px 12px">
+      {% for s in stages %}<option value="{{ s }}" {{ 'selected' if s == c.stage }}>{{ s }}</option>{% endfor %}
+    </select>
+    <button class="btn primary" type="submit">Update stage</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2 class="sec" style="margin-top:0">Outreach sequence</h2>
+  {% set s = c.sequence %}
+  {% if s.sent %}
+    {% for step in s.sent %}
+    <div class="row"><div><div class="who">Stage {{ step.stage }} — {{ step.subject }}</div>
+      <div class="muted" style="font-size:12px">simulated {{ step.on }}</div></div></div>
+    {% endfor %}
+    {% if s.stop_reason %}<p class="why" style="margin-top:10px">{{ s.stop_reason }}</p>
+    {% elif s.next_due %}<p class="sec-sub" style="margin-top:10px">Next stage due {{ s.next_due }}.</p>{% endif %}
+  {% else %}
+  <p class="empty">No outreach sent to this creator yet.</p>
+  {% endif %}
+</section>
+
+{% if campaigns %}
+<section class="card">
+  <h2 class="sec" style="margin-top:0">Campaigns</h2>
+  {% for cmp in campaigns %}
+    {% for p in cmp.participants if p.creator_id == c.id %}
+    <div class="row">
+      <div style="flex:1">
+        <div class="who">{{ cmp.name }}</div>
+        <div class="muted" style="font-size:12px">{{ p.deliverables|join(' · ') }}</div>
+      </div>
+      <span class="chip {{ 'decide' if p.completed == p.total else 'warn' }}">
+        {{ p.completed }}/{{ p.total }}</span>
+    </div>
+    {% endfor %}
+  {% endfor %}
+</section>
+{% endif %}
+
+{% if messages %}
+<section class="card">
+  <h2 class="sec" style="margin-top:0">Messages</h2>
+  {% for m in messages %}
+  <div class="row"><div style="flex:1">
+    <div class="who">{{ m.subject }}</div>
+    <div class="muted" style="font-size:12.5px;line-height:1.5">{{ m.body[:150] }}…</div>
+  </div><span class="when">{{ m.received_hours_ago|ago }}</span></div>
+  {% endfor %}
+</section>
+{% endif %}
+{% endblock %}
