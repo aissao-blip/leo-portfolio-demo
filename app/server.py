@@ -315,8 +315,11 @@ def reset():
 def main():
     store.ensure()
     port = int(os.environ.get("PORT", "5055"))
+    # Local runs stay on the loopback interface. A host that routes external
+    # traffic (Render, Fly) sets HOST=0.0.0.0 so the container is reachable.
+    host = os.environ.get("HOST", "127.0.0.1")
     print("\n  Leo Portfolio Demo")
-    print(f"  http://127.0.0.1:{port}\n")
+    print(f"  http://{'127.0.0.1' if host == '127.0.0.1' else host}:{port}\n")
     print(f"  AI mode: {'live (Anthropic)' if agent.live_available() and os.environ.get('LEO_DEMO_AI_MODE') == 'live' else 'simulated — no API key needed'}")
     print("  No email is sent and no external service is contacted.\n")
-    app.run(host="127.0.0.1", port=port, debug=False)
+    app.run(host=host, port=port, debug=False)

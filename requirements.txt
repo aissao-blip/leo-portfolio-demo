@@ -4,6 +4,10 @@
 # and without a build step.
 Flask>=3.0,<4.0
 
+# Production WSGI server, used only when the demo is deployed to a host.
+# Running locally with `python run.py` does not need it.
+gunicorn>=21.2
+
 # Optional. Only needed if you switch LEO_DEMO_AI_MODE to "live" in .env and
 # supply your own Anthropic key. The demo is complete without it.
 # anthropic>=0.40

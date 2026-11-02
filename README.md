@@ -137,3 +137,26 @@ were carried over. The original informed *what problems were worth solving*;
 every file here was written for this demonstration.
 
 See `portfolio/FEATURE_AUDIT.md` for the full accounting.
+
+---
+
+## Deploying it
+
+The demo is self-contained: fictional data, no database, no API key, no
+outbound network calls. It runs on a free plan anywhere that serves a Python
+web app.
+
+**Render** — the repository carries a `render.yaml`, so the setup is read
+automatically:
+
+1. Sign in at [render.com](https://render.com) with GitHub.
+2. **New** → **Blueprint**, and pick `leo-portfolio-demo`.
+3. **Apply**. The first build takes two or three minutes.
+
+The free plan sleeps after fifteen minutes idle, so the first visit after a
+quiet spell takes a few seconds to wake.
+
+Locally, `python run.py` serves on `127.0.0.1` and never binds a public
+interface. A host sets `HOST=0.0.0.0` to accept external traffic; `wsgi.py` is
+the entrypoint gunicorn uses, and it copies the seed dataset on boot.
+

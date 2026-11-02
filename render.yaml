@@ -1,0 +1,16 @@
+# One-click deploy for the Leo Portfolio Demo.
+#
+# The demo is self-contained: fictional data, no database, no API key, and
+# no outbound network calls. The free plan is sufficient.
+services:
+  - type: web
+    name: leo-portfolio-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 1 --timeout 60
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: LEO_DEMO_AI_MODE
+        value: simulated
